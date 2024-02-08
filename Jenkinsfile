@@ -73,6 +73,30 @@ pipeline{
                }
             }
         }
+        stage('PUSH to JFROG') {
+                        when {
+                               expression { params.action == 'create' }
+                       }
+                 steps {
+                   script {
+                     echo "Attempting to push artifacts to JFrog Artifactory"
+                     withCredentials([usernamePassword(
+                     credentialsId: "artifactory",
+                     usernameVariable: "USER",
+                     passwordVariable: "PASS"
+                     )]) {
+// Use the ARTIFACTORY_USER and ARTIFACTORY_PASSWORD variables
+                           echo "Username: $USER"
+                           echo "Password: $PASS"
+
+def curlCommand = "curl -u '${USER}:${PASS}' -T target/*.jar http://54.236.56.178:8082/artifactory/example-repo-local/"
+echo "Executing curl command: $curlCommand"
+sh curlCommand
+}
+}
+}
+}
+
         stage('Docker Image Build'){
          when { expression {  params.action == 'create' } }
             steps{
