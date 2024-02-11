@@ -90,7 +90,7 @@ pipeline{
             steps {
                 script {
                     // Set variables
-                    def ARTIFACTORY_URL = "http://54.237.127.131:8082/ui/repos/tree/General/"
+                    def ARTIFACTORY_URL = "http://54.237.127.131:8082/ui/repos/tree/General"
                     def REPOSITORY = "my-repo"
                     def USERNAME = "admin"
                     def PASSWORD = ""
