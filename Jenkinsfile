@@ -73,29 +73,34 @@ pipeline{
                }
             }
         }
-        stage('PUSH to JFROG') {
-        when {
-             expression { params.action == 'create' }
-             }
+        stage('Connect to JFrog') {
+         when { expression {  params.action == 'create' } }
             steps {
-        script {
-               echo "Attempting to push artifacts to JFrog Artifactory"
-               withCredentials([usernamePassword(
-               credentialsId: "artifactory",
-               usernameVariable: "USER",
-               passwordVariable: "PASS"
-               )]) {
-// Use the ARTIFACTORY_USER and ARTIFACTORY_PASSWORD variables
-                     echo "Username: $USER"
-                     echo "Password: $PASS"
-
-                     def curlCommand = "curl -u '${USER}:${PASS}' -T target/*.jar http://3.101.54.88:8082/artifactory/example-repo-local/"
-                     echo "Executing curl command: $curlCommand"
-                     sh curlCommand
-                    }
-                  }
+                script {
+                    def USERNAME = "admin"
+                    def PASSWORD = "Sharmi@12#"
+                    echo "Starting Jfrog using Creds:"
+                    echo "Username: $USERNAME"
+                    echo "Password: $PASSWORD"
                 }
-              }
+            }
+        }
+        stage('Push Artifact to JFrog') {
+         when { expression {  params.action == 'create' } }
+            steps {
+                script {
+                    // Set variables
+                    def ARTIFACTORY_URL = "http://54.237.127.131:8082/ui/admin/repositories/local"
+                    def REPOSITORY = "my-repo"
+                    def USERNAME = "admin"
+                    def PASSWORD = ""
+                    def FILE_PATH = "target/*.jar"
+
+                    // Upload the file using curl
+                    sh "curl -u ${USERNAME}:${PASSWORD} -T ${FILE_PATH} \"${ARTIFACTORY_URL}/${REPOSITORY}""
+                }
+            }
+        }
 
 
         stage('Docker Image Build'){
