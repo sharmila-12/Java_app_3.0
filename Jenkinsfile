@@ -73,31 +73,19 @@ pipeline{
                }
             }
         }
-        stage('Connect to JFrog') {
-         when { expression {  params.action == 'create' } }
-            steps {
-                script {
-                    def USERNAME = "admin"
-                    def PASSWORD = "Sharmi@12#"
-                    echo "Starting Jfrog using Creds:"
-                    echo "Username: $USERNAME"
-                    echo "Password: $PASSWORD"
-                }
-            }
-        }
+        
         stage('Push Artifact to JFrog') {
          when { expression {  params.action == 'create' } }
             steps {
                 script {
                     // Set variables
-                    def ARTIFACTORY_URL = "http://54.237.127.131:8082"
-                    def REPOSITORY = "artifactory"
+                    def ARTIFACTORY_URL = "http://54.160.116.131:8082/artifactory/example-repo-local/
                     def USERNAME = "admin"
                     def PASSWORD = "Sharmi@12#"
                     def FILE_PATH = "target/*.jar"
 
                     // Upload the file using curl
-                    sh "curl -u ${USERNAME}:${PASSWORD} -T ${FILE_PATH} '${ARTIFACTORY_URL}/${REPOSITORY}/example-repo-local'"
+                    sh "curl -u ${USERNAME}:${PASSWORD} -T ${FILE_PATH} '${ARTIFACTORY_URL}'"
                 }
             }
         }
