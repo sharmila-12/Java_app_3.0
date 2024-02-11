@@ -79,7 +79,7 @@ pipeline{
             steps {
                 script {
                     // Set variables
-                    def ARTIFACTORY_URL = "http://54.160.116.131:8082/artifactory/example-repo-local/
+                    def ARTIFACTORY_URL = "http://54.160.116.131:8082/artifactory/example-repo-local/"
                     def USERNAME = "admin"
                     def PASSWORD = "Sharmi@12#"
                     def FILE_PATH = "target/*.jar"
