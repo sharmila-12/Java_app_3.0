@@ -90,14 +90,14 @@ pipeline{
             steps {
                 script {
                     // Set variables
-                    def ARTIFACTORY_URL = "http://54.237.127.131:8082/ui/repos/tree/General"
+                    def ARTIFACTORY_URL = "http://54.237.127.131:8082"
                     def REPOSITORY = "artifactory"
                     def USERNAME = "admin"
-                    def PASSWORD = ""
+                    def PASSWORD = "Sharmi@12#"
                     def FILE_PATH = "target/*.jar"
 
                     // Upload the file using curl
-                    sh "curl -u ${USERNAME}:${PASSWORD} -T ${FILE_PATH} \"${ARTIFACTORY_URL}/${REPOSITORY}""
+                    sh "curl -u ${USERNAME}:${PASSWORD} -T ${FILE_PATH} '${ARTIFACTORY_URL}/${REPOSITORY}/example-repo-local'"
                 }
             }
         }
