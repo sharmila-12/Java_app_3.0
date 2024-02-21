@@ -9,7 +9,7 @@ pipeline{
         choice(name: 'action', choices: 'create\ndelete', description: 'Choose create/Destroy')
         string(name: 'ImageName', description: "name of the docker build", defaultValue: 'javapp')
         string(name: 'ImageTag', description: "tag of the docker build", defaultValue: 'v1')
-        string(name: 'DockerHubUser', description: "name of the Application", defaultValue: 'YourNameofApp')
+        string(name: 'DockerHubUser', description: "name of the Application", defaultValue: '7578957ca1f9')
     }
 
     stages{
@@ -19,7 +19,7 @@ pipeline{
             steps{
             gitCheckout(
                 branch: "main",
-                url: "https://github.com/<YourGitHub>/Java_app_3.0.git"
+                url: "https://github.com/sharmila-12/Java_app_3.0.git"
             )
             }
         }
@@ -102,7 +102,7 @@ pipeline{
           when { expression {  params.action == 'create' } }
           steps{
             script{
-                 sh 'curl -X PUT -u admin:password -T  /var/lib/jenkins/workspace/java-3.0/target/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar "http://18.234.253.20:8082/artifactory/example-repo-local/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar"'
+                 sh 'curl -X PUT -u admin:password -T  /var/lib/jenkins/workspace/java-3.0/target/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar "http://35.174.204.213:8082/artifactory/example-repo-local/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar"'
                 }
             }
         }
