@@ -53,16 +53,16 @@ pipeline{
                }
             }
        }
-       //stage('Quality Gate Status Check : Sonarqube'){
-         //when { expression {  params.action == 'create' } }
-           // steps{
-              // script{
+       stage('Quality Gate Status Check : Sonarqube'){
+         when { expression {  params.action == 'create' } }
+            steps{
+               script{
 
-                   //def SonarQubecredentialsId = 'sonarqube-api'
-                  // QualityGateStatus(SonarQubecredentialsId)
-              // }
-           // }
-     //  }
+                   def SonarQubecredentialsId = 'sonarqube-api'
+                   QualityGateStatus(SonarQubecredentialsId)
+               }
+            }
+       }
         stage('Maven Build : maven'){
          when { expression {  params.action == 'create' } }
             steps{
@@ -75,11 +75,11 @@ pipeline{
         stage ('Pushing Jar to Jfrog : python'){
           when { expression {  params.action == 'create' } }
           steps{
-           script{
+            script{
                 jfrogPush()
-               }
-           }
-       }
+                }
+            }
+        }
         stage('Docker Image Build'){
          when { expression {  params.action == 'create' } }
             steps{
@@ -89,6 +89,7 @@ pipeline{
                }
             }
         }
+
          stage('Docker Image Scan: trivy '){
          when { expression {  params.action == 'create' } }
             steps{
@@ -102,7 +103,7 @@ pipeline{
           when { expression {  params.action == 'create' } }
           steps{
             script{
-                 sh 'curl -X PUT -u admin:password -T  /var/lib/jenkins/workspace/java-3.0/target/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar http://35.174.154.141:8082/artifactory/example-repo-local/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar'
+                 sh 'curl -X PUT -u admin:password -T  /var/lib/jenkins/workspace/java-3.0/target/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar "http://35.174.154.141:8082/artifactory/example-repo-local/kubernetes-configmap-reload-0.0.1-SNAPSHOT.jar"'
                 }
             }
         }
