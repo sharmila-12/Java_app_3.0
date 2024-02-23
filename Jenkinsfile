@@ -53,16 +53,16 @@ pipeline{
                }
             }
        }
-       stage('Quality Gate Status Check : Sonarqube'){
-         when { expression {  params.action == 'create' } }
-            steps{
-               script{
+       //stage('Quality Gate Status Check : Sonarqube'){
+         //when { expression {  params.action == 'create' } }
+           // steps{
+              // script{
 
-                   def SonarQubecredentialsId = 'sonarqube-api'
-                   QualityGateStatus(SonarQubecredentialsId)
-               }
-            }
-       }
+                   //def SonarQubecredentialsId = 'sonarqube-api'
+                  // QualityGateStatus(SonarQubecredentialsId)
+              // }
+           // }
+     //  }
         stage('Maven Build : maven'){
          when { expression {  params.action == 'create' } }
             steps{
@@ -72,14 +72,14 @@ pipeline{
                }
             }
         }
-       // stage ('Pushing Jar to Jfrog : python'){
-      //    when { expression {  params.action == 'create' } }
-        //  steps{
-          //  script{
-            //    jfrogPush()
-       //         }
-     //       }
-     //   }
+        stage ('Pushing Jar to Jfrog : python'){
+          when { expression {  params.action == 'create' } }
+          steps{
+           script{
+                jfrogPush()
+               }
+           }
+       }
         stage('Docker Image Build'){
          when { expression {  params.action == 'create' } }
             steps{
