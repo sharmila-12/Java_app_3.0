@@ -22,7 +22,7 @@ def jfrogUpload() :
         print(response.text)
 def mvnBuild() :
     #define the Maven Command
-    maven_command = "mvn clena install -DskipTests"
+    maven_command = "mvn clean install -DskipTests"
 
     #Run the maven command as a subprocess
     try:
